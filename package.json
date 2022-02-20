@@ -1,5 +1,5 @@
 {
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Lightweight react \"pie\" chart",
   "keywords": [
     "react",
@@ -43,7 +43,7 @@
     "postbuild": "yarn generate:packagejosn && yarn copy:license && yarn generate:types && yarn copy:readme",
     "postprepare": "yarn generate:packagejosn",
     "prebuild": "yarn delete:dist && yarn lint:js",
-    "publish:dist": "npm publish dist",
+    "publish:dist": "cd dist && npm publish",
     "rollup:compile": "rollup src/index.ts --file dist/index.js --format cjs -c rollup.config.js",
     "size": "size-limit",
     "start": "tsdx watch",
