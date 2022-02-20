@@ -7,6 +7,7 @@ import React, {
 
 import { useIsMounted } from './hooks/useIsMounted';
 import { debounce } from './utils/debounce';
+import { isClient } from './utils/isClient';
 
 export type TDataItem = {
   color: string;
@@ -43,8 +44,6 @@ export type TPieChartWithNoRefProps = TPieChartCommonProps & {
 };
 
 export type TPieChartProps = TPieChartWithRefProps | TPieChartWithNoRefProps;
-
-const isClient = typeof window === 'object';
 
 /**
  * @component

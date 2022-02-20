@@ -27,7 +27,8 @@ const debounce = (cb, wait) => {
     };
 };
 
-const isClient = typeof window === 'object';
+const isClient = window && typeof window === 'object';
+
 /**
  * @component
  *

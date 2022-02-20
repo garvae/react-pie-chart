@@ -1,11 +1,25 @@
 {
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Lightweight react \"pie\" chart",
   "keywords": [
-    "react",
+    "arc",
+    "arc-chart",
+    "area-chart",
+    "chart",
+    "charting",
+    "charts",
+    "component",
+    "data visualization",
+    "donut-chart",
     "pie",
     "pie-chart",
-    "chart"
+    "radial",
+    "react",
+    "react-component",
+    "reactjs",
+    "svg",
+    "typescript",
+    "visualization"
   ],
   "homepage": "https://github.com/garvae/react-pie-chart",
   "funding": {
