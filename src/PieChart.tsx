@@ -5,6 +5,7 @@ import React, {
   useState,
 } from 'react';
 
+import { useIsMounted } from './hooks/useIsMounted';
 import { debounce } from './utils/debounce';
 
 export type TDataItem = {
@@ -120,6 +121,7 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
     textSvgObjectClassName,
   } = props;
 
+  const isMounted = useIsMounted();
   const [ size, setSize ] = useState(sizeProp || 0);
 
   const totalDataValue = useMemo(() => data?.reduce((current, next) => current + next.value, 0), [ data ]) || 0;
@@ -137,14 +139,16 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
 
   /* prevent unnecessary re-renders */
   const updateSizeDebounced = debounce((newSize: number) => {
-    if (newSize !== size){
+    if (newSize !== size && isMounted){
       setSize(newSize);
     }
   }, debounceTime);
 
   const updateSize = (newSize: number) => {
     if (debounceTime === 0){
-      setSize(newSize);
+      if (isMounted){
+        setSize(newSize);
+      }
     } else {
       updateSizeDebounced(newSize);
     }

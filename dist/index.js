@@ -6,6 +6,17 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
+const useIsMounted = () => {
+    const isMounted = React.useRef(false);
+    React.useEffect(() => {
+        isMounted.current = true;
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
+    return isMounted.current;
+};
+
 const debounce = (cb, wait) => {
     let timer;
     return (...args) => {
@@ -73,6 +84,7 @@ const isClient = typeof window === 'object';
  */
 const PieChart = (props) => {
     const { className, data, debounceTime = 50, donutHoleClassName, donutHoleColor = '#ffffff', donutSegmentClassName, fontSize, maxSize, minSize, parentRef, size: sizeProp, text, textClassName, textColor, textGroupClassName, textSvgObjectClassName, } = props;
+    const isMounted = useIsMounted();
     const [size, setSize] = React.useState(sizeProp || 0);
     const totalDataValue = React.useMemo(() => data === null || data === void 0 ? void 0 : data.reduce((current, next) => current + next.value, 0), [data]) || 0;
     /* main size of chart */
@@ -87,13 +99,15 @@ const PieChart = (props) => {
     const strokeDasharray = radius * Math.PI * 2;
     /* prevent unnecessary re-renders */
     const updateSizeDebounced = debounce((newSize) => {
-        if (newSize !== size) {
+        if (newSize !== size && isMounted) {
             setSize(newSize);
         }
     }, debounceTime);
     const updateSize = (newSize) => {
         if (debounceTime === 0) {
-            setSize(newSize);
+            if (isMounted) {
+                setSize(newSize);
+            }
         }
         else {
             updateSizeDebounced(newSize);
