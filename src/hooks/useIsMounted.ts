@@ -1,9 +1,10 @@
 import {
   useEffect,
-  useRef, 
+  useRef,
+  MutableRefObject,
 } from 'react';
 
-export const useIsMounted = (): boolean => {
+export const useIsMounted = (): MutableRefObject<boolean> => {
   const isMounted = useRef<boolean>(false);
 
   useEffect(() => {
@@ -14,5 +15,5 @@ export const useIsMounted = (): boolean => {
     };
   }, []);
 
-  return isMounted.current;
+  return isMounted;
 };

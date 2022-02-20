@@ -14,7 +14,7 @@ const useIsMounted = () => {
             isMounted.current = false;
         };
     }, []);
-    return isMounted.current;
+    return isMounted;
 };
 
 const debounce = (cb, wait) => {
@@ -99,13 +99,13 @@ const PieChart = (props) => {
     const strokeDasharray = radius * Math.PI * 2;
     /* prevent unnecessary re-renders */
     const updateSizeDebounced = debounce((newSize) => {
-        if (newSize !== size && isMounted) {
+        if (newSize !== size && isMounted.current) {
             setSize(newSize);
         }
     }, debounceTime);
     const updateSize = (newSize) => {
         if (debounceTime === 0) {
-            if (isMounted) {
+            if (isMounted.current) {
                 setSize(newSize);
             }
         }

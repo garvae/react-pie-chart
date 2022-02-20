@@ -139,14 +139,14 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
 
   /* prevent unnecessary re-renders */
   const updateSizeDebounced = debounce((newSize: number) => {
-    if (newSize !== size && isMounted){
+    if (newSize !== size && isMounted.current){
       setSize(newSize);
     }
   }, debounceTime);
 
   const updateSize = (newSize: number) => {
     if (debounceTime === 0){
-      if (isMounted){
+      if (isMounted.current){
         setSize(newSize);
       }
     } else {
