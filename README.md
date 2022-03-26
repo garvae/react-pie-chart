@@ -143,7 +143,7 @@ const App = () => {
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://www.github.com/garvae/chameltone/issues). You can also take a look at the [contributing guide](https://wwwhub.com/garvae/chameltone/raw/master/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://www.github.com/garvae/react-pie-chart/issues). You can also take a look at the [contributing guide](https://wwwhub.com/garvae/react-pie-chart/raw/master/CONTRIBUTING.md).
 
 ## Show your support
 
