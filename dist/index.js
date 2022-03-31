@@ -29,6 +29,13 @@ const debounce = (cb, wait) => {
 
 const isClient = window && typeof window === 'object';
 
+const sanitiseNumber = (n, defaultNumber = 0) => {
+    if (isNaN(n)) {
+        return defaultNumber;
+    }
+    return n;
+};
+
 /**
  * @component
  *
@@ -89,7 +96,7 @@ const PieChart = (props) => {
     const [size, setSize] = React.useState(sizeProp || 0);
     const totalDataValue = React.useMemo(() => data === null || data === void 0 ? void 0 : data.reduce((current, next) => current + next.value, 0), [data]) || 0;
     /* main size of chart */
-    const viewBox = `0 0 ${size} ${size}`;
+    const viewBox = `0 0 ${size || 0} ${size || 0}`;
     const halfSize = size / 2;
     /* chart radius */
     const radiusCalc = (size - halfSize) / 2;
@@ -105,13 +112,14 @@ const PieChart = (props) => {
         }
     }, debounceTime);
     const updateSize = (newSize) => {
+        const n = sanitiseNumber(newSize, size);
         if (debounceTime === 0) {
             if (isMounted.current) {
-                setSize(newSize);
+                setSize(n);
             }
         }
         else {
-            updateSizeDebounced(newSize);
+            updateSizeDebounced(n);
         }
     };
     const handleResize = React.useCallback(() => {
@@ -174,16 +182,16 @@ const PieChart = (props) => {
             const strokeDashoffset = strokeDasharray - strokeDasharray * percentage;
             /* 'rotation' of current segment */
             const transform = `rotate(${-90 + angle} ${halfSize} ${halfSize})`;
-            return (React__default["default"].createElement("circle", { className: donutSegmentClassName, cx: halfSize, cy: halfSize, fill: "transparent", key: segmentId, r: radius, stroke: color, strokeDasharray: strokeDasharray, strokeDashoffset: strokeDashoffset, strokeWidth: halfSize, style: { position: 'relative' }, transform: transform }));
+            return (React__default["default"].createElement("circle", { className: donutSegmentClassName, cx: sanitiseNumber(halfSize), cy: sanitiseNumber(halfSize), fill: "transparent", key: segmentId, r: sanitiseNumber(radius), stroke: color, strokeDasharray: sanitiseNumber(strokeDasharray), strokeDashoffset: sanitiseNumber(strokeDashoffset), strokeWidth: sanitiseNumber(halfSize), style: { position: 'relative' }, transform: transform }));
         }),
-        text && (React__default["default"].createElement("circle", { className: donutHoleClassName, cx: halfSize, cy: halfSize, fill: donutHoleColor, r: holeRadius })),
+        text && (React__default["default"].createElement("circle", { className: donutHoleClassName, cx: sanitiseNumber(halfSize), cy: sanitiseNumber(halfSize), fill: donutHoleColor, r: sanitiseNumber(holeRadius) })),
         text && (React__default["default"].createElement("g", { className: textGroupClassName },
             React__default["default"].createElement("foreignObject", { className: textSvgObjectClassName, height: size, width: size, x: "0", y: "0" },
                 React__default["default"].createElement("div", { className: textClassName, style: {
                         alignItems: 'center',
                         color: textColor || '#000000',
                         display: 'flex',
-                        fontSize: fontSize || `${size / 6}px`,
+                        fontSize: fontSize || `${sanitiseNumber(size / 6)}px`,
                         height: '100%',
                         justifyContent: 'center',
                         width: '100%',

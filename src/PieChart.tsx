@@ -8,6 +8,7 @@ import React, {
 import { useIsMounted } from './hooks/useIsMounted';
 import { debounce } from './utils/debounce';
 import { isClient } from './utils/isClient';
+import { sanitiseNumber } from './utils/sanitiseNumber';
 
 export type TDataItem = {
   color: string;
@@ -126,7 +127,7 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
   const totalDataValue = useMemo(() => data?.reduce((current, next) => current + next.value, 0), [ data ]) || 0;
 
   /* main size of chart */
-  const viewBox = `0 0 ${size} ${size}`;
+  const viewBox = `0 0 ${size || 0} ${size || 0}`;
   const halfSize = size / 2;
   /* chart radius */
   const radiusCalc = (size - halfSize) / 2;
@@ -144,12 +145,13 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
   }, debounceTime);
 
   const updateSize = (newSize: number) => {
+    const n = sanitiseNumber(newSize, size);
     if (debounceTime === 0){
       if (isMounted.current){
-        setSize(newSize);
+        setSize(n);
       }
     } else {
-      updateSizeDebounced(newSize);
+      updateSizeDebounced(n);
     }
   };
 
@@ -238,15 +240,15 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
           return (
             <circle
               className={donutSegmentClassName}
-              cx={halfSize}
-              cy={halfSize}
+              cx={sanitiseNumber(halfSize)}
+              cy={sanitiseNumber(halfSize)}
               fill="transparent"
               key={segmentId}
-              r={radius}
+              r={sanitiseNumber(radius)}
               stroke={color}
-              strokeDasharray={strokeDasharray}
-              strokeDashoffset={strokeDashoffset}
-              strokeWidth={halfSize}
+              strokeDasharray={sanitiseNumber(strokeDasharray)}
+              strokeDashoffset={sanitiseNumber(strokeDashoffset)}
+              strokeWidth={sanitiseNumber(halfSize)}
               style={{ position: 'relative' }}
               transform={transform}
             />
@@ -258,10 +260,10 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
         text && (
           <circle
             className={donutHoleClassName}
-            cx={halfSize}
-            cy={halfSize}
+            cx={sanitiseNumber(halfSize)}
+            cy={sanitiseNumber(halfSize)}
             fill={donutHoleColor}
-            r={holeRadius}
+            r={sanitiseNumber(holeRadius)}
           />
         )
       }
@@ -283,7 +285,7 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
                     alignItems: 'center',
                     color: textColor || '#000000',
                     display: 'flex',
-                    fontSize: fontSize || `${size / 6}px`,
+                    fontSize: fontSize || `${sanitiseNumber(size / 6)}px`,
                     height: '100%',
                     justifyContent: 'center',
                     width: '100%',
