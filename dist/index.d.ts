@@ -16,6 +16,7 @@ export = PieChart;
  * @prop {Array.<TDataItem>} data - REQUIRED. Pie chart data
  * @prop {string} [donutHoleClassName] - Center circle className
  * @prop {string} [donutHoleColor='#ffffff'] - Center circle color
+ * @prop {string} [donutHoleRadius] - Center circle radius. Default is 27.5% of calculated container size
  * @prop {string} [donutSegmentClassName] - Circle segment className
  * @prop {string} [fontSize] - Center circle text size. Must be a CSS 'fontSize' type: '<number>px'
  * @prop {number} [maxSize] - Chart maximum size
@@ -77,6 +78,10 @@ type TPieChartProps = {
      * - Center circle color
      */
     donutHoleColor?: string;
+    /**
+     * - Center circle radius. Default is 27.5% of calculated container size
+     */
+    donutHoleRadius?: string;
     /**
      * - Circle segment className
      */

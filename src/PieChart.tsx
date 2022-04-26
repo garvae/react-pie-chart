@@ -23,6 +23,7 @@ export type TPieChartCommonProps = {
   debounceTime?: number;
   donutHoleClassName?: string;
   donutHoleColor?: string;
+  donutHoleRadius?: number;
   donutSegmentClassName?: string;
   fontSize?: string;
   maxSize?: number;
@@ -63,6 +64,7 @@ export type TPieChartProps = TPieChartWithRefProps | TPieChartWithNoRefProps;
  * @prop {Array.<TDataItem>} data - REQUIRED. Pie chart data
  * @prop {string} [donutHoleClassName] - Center circle className
  * @prop {string} [donutHoleColor='#ffffff'] - Center circle color
+ * @prop {string} [donutHoleRadius] - Center circle radius. Default is 27.5% of calculated container size
  * @prop {string} [donutSegmentClassName] - Circle segment className
  * @prop {string} [fontSize] - Center circle text size. Must be a CSS 'fontSize' type: '<number>px'
  * @prop {number} [maxSize] - Chart maximum size
@@ -108,6 +110,7 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
     debounceTime = 50,
     donutHoleClassName,
     donutHoleColor = '#ffffff',
+    donutHoleRadius,
     donutSegmentClassName,
     fontSize,
     maxSize,
@@ -133,7 +136,7 @@ export const PieChart = (props: TPieChartProps): JSX.Element => {
   const radiusCalc = (size - halfSize) / 2;
   const radius = radiusCalc >= 0 ? radiusCalc : 0;
   /* chart center circle radius */
-  const holeRadius = size * 0.275;
+  const holeRadius = donutHoleRadius ? sanitiseNumber(donutHoleRadius) : size * 0.275;
   /* 'strokeDasharray' of segments */
   const strokeDasharray = radius * Math.PI * 2;
 

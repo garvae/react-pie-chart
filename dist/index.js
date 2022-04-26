@@ -53,6 +53,7 @@ const sanitiseNumber = (n, defaultNumber = 0) => {
  * @prop {Array.<TDataItem>} data - REQUIRED. Pie chart data
  * @prop {string} [donutHoleClassName] - Center circle className
  * @prop {string} [donutHoleColor='#ffffff'] - Center circle color
+ * @prop {string} [donutHoleRadius] - Center circle radius. Default is 27.5% of calculated container size
  * @prop {string} [donutSegmentClassName] - Circle segment className
  * @prop {string} [fontSize] - Center circle text size. Must be a CSS 'fontSize' type: '<number>px'
  * @prop {number} [maxSize] - Chart maximum size
@@ -91,7 +92,7 @@ const sanitiseNumber = (n, defaultNumber = 0) => {
  * ```
  */
 const PieChart = (props) => {
-    const { className, data, debounceTime = 50, donutHoleClassName, donutHoleColor = '#ffffff', donutSegmentClassName, fontSize, maxSize, minSize, parentRef, size: sizeProp, text, textClassName, textColor, textGroupClassName, textSvgObjectClassName, } = props;
+    const { className, data, debounceTime = 50, donutHoleClassName, donutHoleColor = '#ffffff', donutHoleRadius, donutSegmentClassName, fontSize, maxSize, minSize, parentRef, size: sizeProp, text, textClassName, textColor, textGroupClassName, textSvgObjectClassName, } = props;
     const isMounted = useIsMounted();
     const [size, setSize] = React.useState(sizeProp || 0);
     const totalDataValue = React.useMemo(() => data === null || data === void 0 ? void 0 : data.reduce((current, next) => current + next.value, 0), [data]) || 0;
@@ -102,7 +103,7 @@ const PieChart = (props) => {
     const radiusCalc = (size - halfSize) / 2;
     const radius = radiusCalc >= 0 ? radiusCalc : 0;
     /* chart center circle radius */
-    const holeRadius = size * 0.275;
+    const holeRadius = donutHoleRadius ? sanitiseNumber(donutHoleRadius) : size * 0.275;
     /* 'strokeDasharray' of segments */
     const strokeDasharray = radius * Math.PI * 2;
     /* prevent unnecessary re-renders */
