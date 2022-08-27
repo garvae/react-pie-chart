@@ -1,3 +1,18 @@
+# DEPRECATED
+
+> ⛔ This package was deprecated
+
+> ✔️Please use the new more powerful and flexible version: [react-pie-donut-chart](https://github.com/garvae/react-pie-donut-chart)
+
+<br/>
+
+<br/>
+
+<br/>
+
+
+<hr/>
+
 # react-pie-chart
 
 ### Description

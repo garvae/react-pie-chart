@@ -1,6 +1,7 @@
 {
-  "version": "1.1.4",
+  "version": "1.1.5-deprecated",
   "description": "Lightweight react svg \"pie\" chart",
+  "deprecated": true,
   "keywords": [
     "arc",
     "arc-chart",
